@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react'
+import './App.css'
 
 function App() {
   const [images, setImages] = useState([]); // This will hold image filenames
@@ -20,11 +21,11 @@ function App() {
         <p>Loading images...</p>
       ) : (
         images.map((image, i) => (
-          <img key={i} src={`http://localhost:5001/images/${image}`} alt={`Image ${i}`} style={{ margin: '10px', height: '100px' }} />
+          <img key={i} src={`http://localhost:5001/images/${image}`} alt={`Image ${i}`} className='main-img'  />
         ))
       )}
     </div>
   )
 }
 
-export default App;
+export default App
