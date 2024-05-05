@@ -29,12 +29,13 @@ def display_similar_images(paths):
     for col, img in zip(cols, images):
         col.image(img, use_column_width=True)
 
-def get_similar_images(cosine_similarities, reference_image_index, urls, n=5):
+def get_similar_images(cosine_similarities, reference_image_index, image_files, n=5):
     similarities = cosine_similarities[reference_image_index]
-    similarities[reference_image_index] = -1
+    similarities[reference_image_index] = -1  # Ignore self
     top_indices = np.argsort(similarities)[-n:][::-1]
-    similar_urls = [urls[i] for i in top_indices]
-    return similar_urls
+    similar_image_paths = [image_files[i] for i in top_indices]
+    return similar_image_paths
+
 
 def show_gallery():
     st.title("Image Gallery")
@@ -44,11 +45,11 @@ def show_gallery():
         col = cols[i % 3]
         col.image(image, use_column_width=True)
         if col.button(f"Show Similar {i}", key=i):
-            print(i)
-            similar_images_urls = get_similar_images(cosine_similarities, i, image_files, 5)
-            st.session_state.similar_images = similar_images_urls
+            print(f"Showing similar images for index {i}")
+            similar_images_paths = get_similar_images(cosine_similarities, i, image_files, 5)
+            st.session_state.similar_images = similar_images_paths
             st.session_state.show_similar = True
-
+image_files = sorted(os.listdir(images_path))
 # Main app logic
 if st.session_state.show_similar:
     st.button("Back to Gallery", on_click=lambda: setattr(st.session_state, 'show_similar', False))
