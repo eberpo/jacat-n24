@@ -1,3 +1,4 @@
-# jacatón- 24
+# HackUPC - 24
+## Image similarity for finding close garments
 
-Somos los mejores jaquers de toda la jacatón
+A system that is capable of giving the most similar items, in terms of distance according to the embedded features of the images, from a given selected image.
